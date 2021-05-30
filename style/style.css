@@ -1,0 +1,75 @@
+html, body {
+    height: 100%;
+}
+
+body {
+    background-color: #EFF4FB;
+}
+
+.navbar {
+    position: relative;
+}
+
+#shop-card {
+    width: 75%;
+    margin: 5% 25% 5% 25%;
+    float: none;
+    border-radius: 15px;
+}
+
+#navbar-img {
+    width: 10%;
+    position: absolute;
+    left: 45%;
+    display: block;
+}
+
+#shop-card-header {
+    background-color: #3B3B3B;
+    color: #fff;
+    text-align: center;
+    border-radius: 15px 15px 0px 0px;
+}
+
+.question {
+    margin: 0% 3% 0% 3%;
+}
+
+.custom-footer {
+    margin-top: -3%;
+    margin-bottom: 3%;
+}
+
+.btn-group.full-width {
+    display: flex;
+}
+
+.full-width .btn {
+    width: 100%;
+    flex: 1;
+    border-radius: 0px;
+}
+
+#products-missing-fields-alert {
+    border-radius: 10px;
+    max-width: 75%;
+    margin-left: 12.5%;
+    margin-top: 5%;
+    margin-bottom: 5%
+}
+
+#products-no-products-alert {
+    border-radius: 10px;
+    max-width: 75%;
+    margin-left: 12.5%;
+    margin-top: 5%;
+    margin-bottom: 5%
+}
+
+#no-products-in-cart-alert {
+    border-radius: 10px;
+    max-width: 75%;
+    margin-left: 12.5%;
+    margin-top: 5%;
+    margin-bottom: 5%
+}

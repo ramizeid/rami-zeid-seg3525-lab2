@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<link rel="icon" type="image/png" href="images/logo_icon.ico"/>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Loblaws Supermarket</title>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style/style.css">
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<nav class="navbar">
+		<a class="navbar-brand" style="margin-top: 1%;">
+			<img class="img-responsive" src="images/full_logo.png" id="navbar-img">
+		</a>
+	</nav>
+
+	<div class="container-fluid d-flex align-items-center justify-content-center" style="min-height: 75%">
+		<div class="card shadow" id="shop-card">
+			<h5 class="card-header" id="shop-card-header">Welcome to Loblaws</h5>
+			<div class="btn-group full-width" role="group" id="shop-buttons-panel" aria-label="Shop Buttons Panel" style="width: 100%">
+				<button type="button" class="btn btn-secondary" id="client-panel-btn" onclick="loadPanel('client-panel-body', 'client-panel-btn')">Client Panel</button>
+				<button type="button" class="btn btn-secondary" id="products-panel-btn" onclick="loadPanel('products-panel-body', 'products-panel-btn')">Products</button>
+				<button type="button" class="btn btn-secondary" id="shopping-cart-btn" onclick="loadPanel('shopping-cart-body', 'shopping-cart-btn')">Cart</button>
+			</div>
+
+			<div id="panels">
+				<div class="card-body" id="client-panel-body">
+					<h5 class="card-title text-center">We'd like to learn more about you!</h5>
+					<hr>
+					<form id="client-panel-form">
+						<div class="question" id="q1">
+							<p><strong>What is your name?</strong></p>
+							<p id="q1-error-message" style="display: none; color: red; margin-top: -2%; margin-bottom: 1%">* This field is required.</p>
+							<input class="form-control" id="q1-text-area" type="text" placeholder="Name">
+						</div>
+						<hr>
+						<div class="question" id="q2">
+							<p><strong>Select the intolerance(s) that you possess. Please note that our list of products will vary based on your choice.</strong></p>
+
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" name="q2-option" id="q2-option1" value="q2-option1">
+								<label class="form-check-label" for="q2-option1">Lactose intolerance</label>
+							</div>
+
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" name="q2-option" id="q2-option2" value="q2-option2">
+								<label class="form-check-label" for="q2-option2">Nut allergy</label>
+							</div>
+						</div>
+						<hr>
+						<div class="question" id="q3">
+							<p><strong>Do you prefer your produce to be organic?</strong></p>
+
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="q3-option" id="q3-option1" value="q3-option1">
+								<label class="form-check-label" for="q3-option1">Yes</label>
+							</div>
+
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="q3-option" id="q3-option2" value="q3-option2">
+								<label class="form-check-label" for="q3-option2">No</label>
+							</div>
+
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="q3-option" id="q3-option3" value="q3-option3" checked>
+								<label class="form-check-label" for="q3-option3">No preference</label>
+							</div>
+						</div>
+						<hr>
+						<div class="question" id="q4">
+							<p><strong>Please select your budget.</strong></p>
+							<p id="q4-error-message" style="display: none; color: red; margin-top: -2%; margin-bottom: 1%">* This field is required.</p>
+
+							<select class="custom-select text-center" id="q4-dropdown">
+								<option value="q4-none">None</option>
+								<option value="q4-1">Small - Under $5</option>
+								<option value="q4-2">Medium - Under $10</option>
+								<option value="q4-3">Large - Above $10</option>
+							</select>
+						</div>
+						<hr>
+					</form>
+
+					<a class="btn btn-primary mx-auto d-block" style="color: white" onclick="clientPanelNextButtonClick()">Next</a>
+				</div>
+
+				<div class="card-body" id="products-panel-body">
+					<h5 class="card-title text-center">List of available products</h5>
+					<hr>
+					<div class="alert alert-danger" role="alert" id="products-missing-fields-alert">
+                        <h5 class="alert-heading text-center">All required fields must be submitted in the client panel.</h5>
+					</div>
+
+					<div class="alert alert-danger" role="alert" id="products-no-products-alert" style="display: none">
+                        <h5 class="alert-heading text-center">No products matching your input were found.</h5>
+					</div>
+
+					<p id="products-error-message" style="display: none; color: red; margin-top: -2%; margin-bottom: 1%">* You must add an item to your cart.</p>
+
+					<table class="table" id="products-table" style="display: none">
+						<thead class="table-dark">
+							<tr>
+								<th scope="col">Product</th>
+								<th scope="col">Price</th>
+								<th scope="col">Add to cart</th>
+							</tr>
+						</thead>
+						<tbody id="products-table-tbody"></tbody>
+					</table>
+					<hr>
+					<a class="btn btn-primary mx-auto" style="color: white; display: none" id="add-to-cart-button" onclick="addToCartButtonClick()">Add selected items to cart</a>
+				</div>
+
+				<div class="card-body" id="shopping-cart-body">
+					<h5 class="card-title text-center" id="shopping-card-title">Shopping cart</h5>
+					<hr>
+					<div class="alert alert-danger" role="alert" id="no-products-in-cart-alert">
+                        <h5 class="alert-heading text-center">No products were found in your cart.</h5>
+					</div>
+
+					<table class="table" id="cart-table" style="display: none">
+						<thead class="table-dark">
+							<tr>
+								<th scope="col">Product</th>
+								<th scope="col">Price</th>
+							</tr>
+						</thead>
+						<tbody id="cart-table-tbody"></tbody>
+						<tfoot id="cart-table-tfoot"></tfoot>
+					</table>
+					<hr>
+					<a class="btn btn-primary mx-auto" style="color: white; display: none" id="place-order-button">Place your order</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer class="custom-footer">
+		<div class="text-center">
+			Site created by Rami Zeid
+		</div>
+	</footer>
+</body>
+
+	<script type="text/javascript" src="scripts/main.js"></script>
+</html>
